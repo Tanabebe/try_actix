@@ -19,14 +19,14 @@ async fn index() -> Result<HttpResponse> {
             name: String::from("主田"),
             age: 24,
             personal_color: String::from("blue"),
-            hobbies: vec![String::from(""), String::from("")],
+            hobbies: vec![],
         },
         User {
             id: 2,
             name: String::from("先岡"),
             age: 28,
             personal_color: String::from("pink"),
-            hobbies: vec![String::from("")],
+            hobbies: vec![String::from("cooking")],
         },
         User {
             id: 3,
