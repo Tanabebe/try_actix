@@ -11,9 +11,42 @@ struct User {
     hobbies: Vec<String>,
 }
 
+#[derive(Serialize, Deserialize, Debug)]
+struct NameLists {
+    id: usize,
+    firstname: String,
+    lastname: String,
+    age: u32,
+}
+
+#[get("/name/lists")]
+async fn name_lists() -> Result<HttpResponse> {
+    let result = vec![
+        NameLists {
+            id: 1,
+            firstname: String::from("勉"),
+            lastname: String::from("主田"),
+            age: 24,
+        },
+        NameLists {
+            id: 2,
+            firstname: String::from("未来"),
+            lastname: String::from("先岡"),
+            age: 28,
+        },
+        NameLists {
+            id: 3,
+            firstname: String::from("一郎"),
+            lastname: String::from("後藤"),
+            age: 23,
+        },
+    ];
+    Ok(HttpResponse::Ok().json(result))
+}
+
 #[get("/users")]
 async fn index() -> Result<HttpResponse> {
-    let user = vec![
+    let result = vec![
         User {
             id: 1,
             name: String::from("主田"),
@@ -36,7 +69,7 @@ async fn index() -> Result<HttpResponse> {
             hobbies: vec![String::from("game"), String::from("soccer")],
         },
     ];
-    Ok(HttpResponse::Ok().json(user))
+    Ok(HttpResponse::Ok().json(result))
 }
 
 #[actix_web::main]
@@ -53,6 +86,7 @@ async fn main() -> std::io::Result<()> {
         App::new()
             .wrap(cors)
             .service(index)
+            .service(name_lists)
     })
         .bind("127.0.0.1:8080")?
         .run()
